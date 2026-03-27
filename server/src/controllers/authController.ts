@@ -56,15 +56,19 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             res.status(401).json({message: "Invalid Credentials"});
             return;
         }
+        const signOptions: SignOptions = {
+             expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as SignOptions['expiresIn'],
+    };
 
         const token = jwt.sign(
-            {userId: user.id }, 
+            { userId: user.id },
             process.env.JWT_SECRET!,
-            {expiresIn: process.env.JWT_EXPIRES_IN || "7d"}
+            signOptions
         );
+        
         res.json({
             token, 
-            user: {id: user, name: user.name, email: user.email},
+            user: {id: user, name: user.name, email: user.email}
         })
 
     }catch(error: unknown) {
