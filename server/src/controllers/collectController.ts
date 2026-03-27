@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { UAParser } from "ua-parser-js";
 import Event from "../model/Event";
 import Site from "../model/Site";
+import { getIO } from '../config/socket';
+
 
 export const collect = async (req: Request, res: Response): Promise<void> =>{
     try{
@@ -17,6 +19,26 @@ export const collect = async (req: Request, res: Response): Promise<void> =>{
         const parser = new UAParser(userAgent);
         const browser = parser.getBrowser().name || "Unknown";
         const os = parser.getOS().name || "Unknown";
+        const device = width < 768 ? "mobile"
+                    :width < 1024 ? "tablet"
+                    :"desktop";
+
+        // get IP from request headers
+        const ip = (req.headers["x-forwarded-for"] as string)
+            ?.split(",")[0]?.trim() || req.ip || null;
+
+        const event = await Event.create({
+            siteId, type, url, referrer, userAgent, visitorId, sessionId, props, ip, browser, os, device,
+        });
+
+        // emit to dashboard in real-time via Socket.io
+    try {
+        const io = getIO();
+            io.to(`site:${siteId}`).emit('new_event', {
+            type, url, browser, os, device,
+            timestamp: event.createdAt,
+        });
+    }
 
 
 
