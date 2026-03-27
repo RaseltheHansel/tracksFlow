@@ -38,6 +38,8 @@ export const collect = async (req: Request, res: Response): Promise<void> =>{
             type, url, browser, os, device,
             timestamp: event.createdAt,
         });
+    } catch {
+      // Socket.io might not be ready — still save the event
     }
 
 
