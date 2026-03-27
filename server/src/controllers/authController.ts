@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt, { SignOptions } from 'jsonwebtoken';
 import User from "../model/User";
 import { sendWelcomeEmail } from "../utils/mailer";
-import { error } from "node:console";
+
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
