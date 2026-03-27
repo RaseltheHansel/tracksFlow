@@ -15,20 +15,21 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-const hashed = await bcrypt.hash(password, 12);
-    const user   = await User.create({ name, email, password: hashed });
+        const hashed = await bcrypt.hash(password, 12);
+        const user   = await User.create({ name, email, password: hashed });
 
-    sendWelcomeEmail(email, name).catch(console.error);
+        sendWelcomeEmail(email, name).catch(console.error);
 
-    const signOptions: SignOptions = {
-      expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as SignOptions['expiresIn'],
-    };
+        const signOptions: SignOptions = {
+            expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as SignOptions['expiresIn'],
+        };
 
-    const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_SECRET!,
-      signOptions
-    );
+        const token = jwt.sign(
+            { userId: user.id },
+            process.env.JWT_SECRET!,
+            signOptions
+        );
+        
         res.status(201).json({
             token,
             user: { id: user.id, name: user.name, email: user.email },
@@ -58,7 +59,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         }
         const signOptions: SignOptions = {
              expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as SignOptions['expiresIn'],
-    };
+        };
 
         const token = jwt.sign(
             { userId: user.id },
