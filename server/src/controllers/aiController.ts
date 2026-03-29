@@ -14,6 +14,7 @@ export const getInsights = async (req: AuthRequest, res: Response): Promise<void
 
         // Gather data to send to AI
         // adsasdas
+        // sdadadad
  
 
 
