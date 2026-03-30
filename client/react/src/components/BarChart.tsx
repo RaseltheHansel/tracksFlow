@@ -1,41 +1,56 @@
-interface TopPagesProps {
-  pages: { url: string; views: number }[];
+import {
+  ResponsiveContainer,
+  BarChart as ReBarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+} from 'recharts';
+
+interface BarChartProps {
+  title?: string;
+  data: { name: string; value: number }[];
+  height?: number;
+  color?: string;
 }
 
-export default function TopPages({ pages }: TopPagesProps) {
-  const max = pages[0]?.views || 1;
-
+export default function BarChart({
+  title,
+  data,
+  height = 220,
+  color = '#3b82f6',
+}: BarChartProps) {
   return (
-    <div className='bg-track-card border border-track-border
-      rounded-2xl p-5'>
-      <h3 className='font-semibold text-track-text mb-4'>
-        Top Pages
-      </h3>
-      {pages.length === 0 ? (
-        <div className='flex items-center justify-center h-32'>
+    <div className='bg-track-card border border-track-border rounded-2xl p-5'>
+      {title && (
+        <h3 className='font-semibold text-track-text mb-4'>
+          {title}
+        </h3>
+      )}
+      {data.length === 0 ? (
+        <div className='flex items-center justify-center' style={{ height }}>
           <p className='text-track-muted text-sm'>No data yet</p>
         </div>
       ) : (
-        <div className='space-y-3'>
-          {pages.map((page, i) => (
-            <div key={i}>
-              <div className='flex items-center justify-between mb-1'>
-                <p className='text-track-soft text-sm truncate flex-1 mr-4'>
-                  {page.url}
-                </p>
-                <span className='text-track-muted text-xs shrink-0'>
-                  {page.views.toLocaleString()}
-                </span>
-              </div>
-              {/* Progress bar */}
-              <div className='h-1.5 bg-track-surface rounded-full overflow-hidden'>
-                <div
-                  className='h-full bg-track-accent rounded-full'
-                  style={{ width: `${(page.views / max) * 100}%` }}
-                />
-              </div>
-            </div>
-          ))}
+        <div style={{ height }}>
+          <ResponsiveContainer width='100%' height='100%'>
+            <ReBarChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+              <CartesianGrid stroke='#374151' strokeDasharray='3 3' />
+              <XAxis dataKey='name' stroke='#9ca3af' fontSize={12} tickMargin={8} />
+              <YAxis stroke='#9ca3af' fontSize={12} tickMargin={8} allowDecimals={false} />
+              <Tooltip
+                contentStyle={{
+                  background: '#111827',
+                  border: '1px solid #374151',
+                  borderRadius: 12,
+                  color: '#f9fafb',
+                  fontSize: 12,
+                }}
+              />
+              <Bar dataKey='value' fill={color} radius={[6, 6, 0, 0]} />
+            </ReBarChart>
+          </ResponsiveContainer>
         </div>
       )}
     </div>

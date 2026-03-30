@@ -1,67 +1,82 @@
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
 } from 'recharts';
-import { format } from 'date-fns';
 
 interface ViewsChartProps {
   data: { date: string; views: number }[];
 }
 
+const formatDate = (value: string) => {
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return value;
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+};
+
 export default function ViewsChart({ data }: ViewsChartProps) {
-  const formatted = data.map(d => ({
-    ...d,
-    date: format(new Date(d.date), 'MMM dd'),
-  }));
+  const sorted = [...data].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
 
   return (
-    <div className='bg-track-card border border-track-border
-      rounded-2xl p-5'>
-      <h3 className='font-semibold text-track-text mb-4'>
-        Page Views Over Time
-      </h3>
-      {data.length === 0 ? (
-        <div className='flex items-center justify-center h-48'>
+    <div className='bg-track-card border border-track-border rounded-2xl p-5'>
+      <div className='flex items-center justify-between mb-4'>
+        <div>
+          <h3 className='font-semibold text-track-text'>Views Over Time</h3>
+          <p className='text-track-muted text-xs mt-0.5'>
+            Page views trend
+          </p>
+        </div>
+      </div>
+
+      {sorted.length === 0 ? (
+        <div className='flex items-center justify-center h-56'>
           <p className='text-track-muted text-sm'>No data yet</p>
         </div>
       ) : (
-        <ResponsiveContainer width='100%' height={200}>
-          <AreaChart data={formatted}>
-            <defs>
-              <linearGradient id='viewsGradient' x1='0' y1='0' x2='0' y2='1'>
-                <stop offset='5%'  stopColor='#3b82f6' stopOpacity={0.3} />
-                <stop offset='95%' stopColor='#3b82f6' stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray='3 3' stroke='#374151' />
-            <XAxis
-              dataKey='date'
-              tick={{ fill: '#9ca3af', fontSize: 12 }}
-              axisLine={false}
-              tickLine={false}
-            />
-            <YAxis
-              tick={{ fill: '#9ca3af', fontSize: 12 }}
-              axisLine={false}
-              tickLine={false}
-            />
-            <Tooltip
-              contentStyle={{
-                background: '#1f2937',
-                border: '1px solid #374151',
-                borderRadius: '10px',
-                color: '#f9fafb',
-              }}
-            />
-            <Area
-              type='monotone'
-              dataKey='views'
-              stroke='#3b82f6'
-              strokeWidth={2}
-              fill='url(#viewsGradient)'
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+        <div className='h-60'>
+          <ResponsiveContainer width='100%' height='100%'>
+            <LineChart data={sorted} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
+              <CartesianGrid stroke='#374151' strokeDasharray='3 3' />
+              <XAxis
+                dataKey='date'
+                tickFormatter={formatDate}
+                stroke='#9ca3af'
+                fontSize={12}
+                tickMargin={8}
+              />
+              <YAxis
+                stroke='#9ca3af'
+                fontSize={12}
+                tickMargin={8}
+                allowDecimals={false}
+              />
+              <Tooltip
+                contentStyle={{
+                  background: '#111827',
+                  border: '1px solid #374151',
+                  borderRadius: 12,
+                  color: '#f9fafb',
+                  fontSize: 12,
+                }}
+                labelFormatter={(label) => formatDate(String(label))}
+              />
+              <Line
+                type='monotone'
+                dataKey='views'
+                stroke='#3b82f6'
+                strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 5 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       )}
     </div>
   );

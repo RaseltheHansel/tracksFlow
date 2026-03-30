@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getStats, getSite, getSnippet, getInsights } from '../api/axios';
+import { getStats, getSite, getSnippet } from '../api/axios';
 import type { Site, StatsData } from '../types';
 import StatsCards    from '../components/StatsCards';
 import LiveFeed      from '../components/LiveFeed';
