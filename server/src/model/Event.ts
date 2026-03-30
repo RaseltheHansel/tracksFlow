@@ -39,8 +39,8 @@ Event.init({
     tableName: 'events',
     indexes: [
         { fields: ['siteId']},
-        { fields: ['createdId']},
-        { fields: ['siteId', 'createId']}, 
+        { fields: ['created_at']},
+        { fields: ['siteId', 'created_at']}, 
     ],
 });
 

@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST:      db
+      DB_PORT:      5432
+      DB_NAME:      trackflow
+      DB_USER:      postgres
+      DB_PASSWORD:  password
+      JWT_SECRET:   ${JWT_SECRET}
+      EMAIL_USER:   ${EMAIL_USER}
+      EMAIL_PASS:   ${EMAIL_PASS}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      CLIENT_URL:   ${CLIENT_URL}
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB:       trackflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres_data:
