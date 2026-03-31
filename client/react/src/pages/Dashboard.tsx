@@ -76,7 +76,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className='min-h-screen bg-track-bg p-8'>
+    <div className='min-h-screen bg-track-bg p-8 pb-16'>
       <div className='max-w-6xl mx-auto'>
         <div className='flex items-center justify-between mb-8'>
           <div>
@@ -84,8 +84,12 @@ export default function Dashboard() {
               Dashboard
             </p>
             <h1 className='text-4xl font-semibold text-track-text'>
-              TrackFlow
-              <span className='ml-3 text-xs font-medium text-track-accent bg-track-surface border border-track-border px-2 py-1 rounded-full align-middle'>
+              <span className='bg-gradient-to-r from-track-accent to-track-lime bg-clip-text text-transparent'>
+                TrackFlow
+              </span>
+              <span className='ml-3 text-xs font-semibold text-track-accent
+                bg-track-accent/10 border border-track-accent/30 px-2.5 py-1
+                rounded-full align-middle'>
                 Real‑time
               </span>
             </h1>
@@ -101,7 +105,7 @@ export default function Dashboard() {
             )}
             <button
               onClick={() => navigate('/settings')}
-              className='bg-track-surface/80 backdrop-blur border border-track-border
+              className='bg-track-surface/70 backdrop-blur border border-track-border/80
                 text-track-soft text-sm font-medium px-4 py-2.5 rounded-xl
                 hover:border-track-accent hover:text-track-text transition-colors'
             >
@@ -109,16 +113,17 @@ export default function Dashboard() {
             </button>
             <button
               onClick={logout}
-              className='bg-track-surface/80 backdrop-blur border border-track-border
+              className='bg-track-surface/70 backdrop-blur border border-track-border/80
                 text-track-soft text-sm font-medium px-4 py-2.5 rounded-xl
                 hover:border-track-accent hover:text-track-text transition-colors'
             >
               Logout
             </button>
             <button onClick={() => setShowCreate(true)}
-              className='bg-track-accent/90 hover:bg-track-accent text-track-bg
-                font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors
-                shadow-[0_10px_30px_rgba(56,189,248,0.25)]'>
+              className='bg-gradient-to-r from-track-accent to-track-accent2
+                text-track-bg font-semibold px-5 py-2.5 rounded-xl text-sm
+                transition-[filter,transform] hover:brightness-110 hover:-translate-y-0.5
+                shadow-[0_10px_30px_rgba(34,211,238,0.25)]'>
               + Add Website
             </button>
           </div>
@@ -135,7 +140,9 @@ export default function Dashboard() {
               Add your first website to start tracking visitors
             </p>
             <button onClick={() => setShowCreate(true)}
-              className='bg-track-accent text-track-bg px-6 py-3 rounded-xl font-semibold'>
+              className='bg-gradient-to-r from-track-accent to-track-accent2
+                text-track-bg px-6 py-3 rounded-xl font-semibold
+                shadow-[0_10px_30px_rgba(34,211,238,0.25)]'>
               Add Website
             </button>
           </div>
@@ -144,9 +151,11 @@ export default function Dashboard() {
             {sites.map(site => (
               <div key={site.id}
                 onClick={() => navigate(`/site/${site.siteId}`)}
-                className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
-                  cursor-pointer hover:border-track-accent transition-colors
-                  shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
+                className='bg-gradient-to-br from-track-card/90 to-track-surface/70 backdrop-blur
+                  border border-track-border/80 rounded-2xl p-5 cursor-pointer
+                  hover:border-track-accent transition-colors
+                  shadow-[0_12px_30px_rgba(0,0,0,0.35)] ring-1 ring-white/5'>
+                <div className='h-1 w-12 bg-gradient-to-r from-track-accent to-track-lime rounded-full mb-4' />
                 <h3 className='font-semibold text-track-text mb-1'>{site.name}</h3>
                 <p className='text-track-muted text-sm mb-4'>{site.domain}</p>
                 <code className='text-xs text-track-muted bg-track-surface
@@ -156,7 +165,7 @@ export default function Dashboard() {
                 <div className='flex gap-2 mt-4'>
                   <button
                     onClick={(e) => { e.stopPropagation(); openEdit(site); }}
-                    className='flex-1 bg-track-surface border border-track-border
+                    className='flex-1 bg-track-surface/70 border border-track-border/80
                       text-track-soft text-xs font-medium py-2 rounded-xl
                       hover:border-track-accent transition-colors'
                   >
@@ -164,7 +173,7 @@ export default function Dashboard() {
                   </button>
                   <button
                     onClick={(e) => { e.stopPropagation(); handleDelete(site); }}
-                    className='flex-1 bg-track-surface border border-track-border
+                    className='flex-1 bg-track-surface/70 border border-track-border/80
                       text-track-soft text-xs font-medium py-2 rounded-xl
                       hover:border-track-accent transition-colors'
                   >
@@ -179,31 +188,34 @@ export default function Dashboard() {
         {/* Create modal */}
         {showCreate && (
           <div className='fixed inset-0 bg-black/70 flex items-center justify-center z-50'>
-            <div className='bg-track-card border border-track-border
-              rounded-2xl p-8 w-full max-w-md'>
+            <div className='bg-gradient-to-br from-track-card/95 to-track-surface/80
+              border border-track-border/80 rounded-2xl p-8 w-full max-w-md ring-1 ring-white/5'>
               <h2 className='text-2xl font-bold text-track-text mb-6'>Add Website</h2>
               <div className='space-y-4'>
                 <input type="text" placeholder="Website name (e.g. My Blog)"
                   value={newName} onChange={e => setNewName(e.target.value)}
                   className='w-full bg-track-surface border border-track-border
                     text-track-text placeholder:text-track-muted rounded-xl
-                    px-4 py-3 text-sm outline-none focus:border-track-accent'
+                    px-4 py-3 text-sm outline-none focus:border-track-accent
+                    focus:ring-2 focus:ring-track-accent/20 transition-colors'
                 />
                 <input type="text" placeholder="Domain (e.g. myblog.com)"
                   value={newDomain} onChange={e => setNewDomain(e.target.value)}
                   className='w-full bg-track-surface border border-track-border
                     text-track-text placeholder:text-track-muted rounded-xl
-                    px-4 py-3 text-sm outline-none focus:border-track-accent'
+                    px-4 py-3 text-sm outline-none focus:border-track-accent
+                    focus:ring-2 focus:ring-track-accent/20 transition-colors'
                 />
               </div>
               <div className='flex gap-3 mt-6'>
                 <button onClick={handleCreate} disabled={loading}
-                  className='flex-1 bg-track-accent hover:opacity-90 disabled:opacity-50
-                    text-white font-semibold py-3 rounded-xl text-sm'>
+                  className='flex-1 bg-gradient-to-r from-track-accent to-track-accent2
+                    hover:brightness-110 disabled:opacity-50
+                    text-track-bg font-semibold py-3 rounded-xl text-sm'>
                   {loading ? 'Creating...' : 'Create'}
                 </button>
                 <button onClick={() => setShowCreate(false)}
-                  className='flex-1 bg-track-surface border border-track-border
+                  className='flex-1 bg-track-surface border border-track-border/80
                     text-track-muted py-3 rounded-xl text-sm hover:bg-track-card'>
                   Cancel
                 </button>
@@ -215,8 +227,8 @@ export default function Dashboard() {
         {/* Edit modal */}
         {editingSite && (
           <div className='fixed inset-0 bg-black/70 flex items-center justify-center z-50'>
-            <div className='bg-track-card border border-track-border
-              rounded-2xl p-8 w-full max-w-md'>
+            <div className='bg-gradient-to-br from-track-card/95 to-track-surface/80
+              border border-track-border/80 rounded-2xl p-8 w-full max-w-md ring-1 ring-white/5'>
               <h2 className='text-2xl font-bold text-track-text mb-6'>
                 Edit Website
               </h2>
@@ -225,23 +237,26 @@ export default function Dashboard() {
                   value={editName} onChange={e => setEditName(e.target.value)}
                   className='w-full bg-track-surface border border-track-border
                     text-track-text placeholder:text-track-muted rounded-xl
-                    px-4 py-3 text-sm outline-none focus:border-track-accent'
+                    px-4 py-3 text-sm outline-none focus:border-track-accent
+                    focus:ring-2 focus:ring-track-accent/20 transition-colors'
                 />
                 <input type="text" placeholder="Domain"
                   value={editDomain} onChange={e => setEditDomain(e.target.value)}
                   className='w-full bg-track-surface border border-track-border
                     text-track-text placeholder:text-track-muted rounded-xl
-                    px-4 py-3 text-sm outline-none focus:border-track-accent'
+                    px-4 py-3 text-sm outline-none focus:border-track-accent
+                    focus:ring-2 focus:ring-track-accent/20 transition-colors'
                 />
               </div>
               <div className='flex gap-3 mt-6'>
                 <button onClick={handleUpdate} disabled={savingEdit}
-                  className='flex-1 bg-track-accent hover:opacity-90 disabled:opacity-50
-                    text-white font-semibold py-3 rounded-xl text-sm'>
+                  className='flex-1 bg-gradient-to-r from-track-accent to-track-accent2
+                    hover:brightness-110 disabled:opacity-50
+                    text-track-bg font-semibold py-3 rounded-xl text-sm'>
                   {savingEdit ? 'Saving...' : 'Save'}
                 </button>
                 <button onClick={() => setEditingSite(null)}
-                  className='flex-1 bg-track-surface border border-track-border
+                  className='flex-1 bg-track-surface border border-track-border/80
                     text-track-muted py-3 rounded-xl text-sm hover:bg-track-card'>
                   Cancel
                 </button>

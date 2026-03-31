@@ -24,8 +24,9 @@ export default function ViewsChart({ data }: ViewsChartProps) {
   );
 
   return (
-    <div className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
-      shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
+    <div className='bg-gradient-to-br from-track-card/90 to-track-surface/70
+      backdrop-blur border border-track-border/80 rounded-2xl p-5
+      shadow-[0_12px_30px_rgba(0,0,0,0.35)] ring-1 ring-white/5'>
       <div className='flex items-center justify-between mb-4'>
         <div>
           <h3 className='font-semibold text-track-text'>Views Over Time</h3>
@@ -43,26 +44,32 @@ export default function ViewsChart({ data }: ViewsChartProps) {
         <div className='h-60'>
           <ResponsiveContainer width='100%' height='100%'>
             <LineChart data={sorted} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
-              <CartesianGrid stroke='#374151' strokeDasharray='3 3' />
+              <defs>
+                <linearGradient id='viewsLine' x1='0' y1='0' x2='1' y2='0'>
+                  <stop offset='0%' stopColor='#22d3ee' />
+                  <stop offset='100%' stopColor='#a3e635' />
+                </linearGradient>
+              </defs>
+              <CartesianGrid stroke='#1f2a44' strokeDasharray='3 3' />
               <XAxis
                 dataKey='date'
                 tickFormatter={formatDate}
-                stroke='#9ca3af'
+                stroke='#94a3b8'
                 fontSize={12}
                 tickMargin={8}
               />
               <YAxis
-                stroke='#9ca3af'
+                stroke='#94a3b8'
                 fontSize={12}
                 tickMargin={8}
                 allowDecimals={false}
               />
               <Tooltip
                 contentStyle={{
-                  background: '#111827',
-                  border: '1px solid #374151',
+                  background: '#0b1120',
+                  border: '1px solid #1f2a44',
                   borderRadius: 12,
-                  color: '#f9fafb',
+                  color: '#e5e7eb',
                   fontSize: 12,
                 }}
                 labelFormatter={(label) => formatDate(String(label))}
@@ -70,10 +77,10 @@ export default function ViewsChart({ data }: ViewsChartProps) {
               <Line
                 type='monotone'
                 dataKey='views'
-                stroke='#3b82f6'
-                strokeWidth={2}
+                stroke='url(#viewsLine)'
+                strokeWidth={2.5}
                 dot={false}
-                activeDot={{ r: 5 }}
+                activeDot={{ r: 5, fill: '#a3e635' }}
               />
             </LineChart>
           </ResponsiveContainer>

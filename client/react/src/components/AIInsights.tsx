@@ -20,8 +20,9 @@ export default function AIInsights({ siteId }: { siteId: string }) {
   };
 
   return (
-    <div className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
-      shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
+    <div className='bg-gradient-to-br from-track-card/90 to-track-surface/70
+      backdrop-blur border border-track-border/80 rounded-2xl p-5
+      shadow-[0_12px_30px_rgba(0,0,0,0.35)] ring-1 ring-white/5'>
       <div className='flex items-center justify-between mb-4'>
         <div>
           <h3 className='font-semibold text-track-text'>AI Insights</h3>
@@ -32,9 +33,10 @@ export default function AIInsights({ siteId }: { siteId: string }) {
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className='bg-track-accent/90 hover:bg-track-accent disabled:opacity-50
+          className='bg-gradient-to-r from-track-accent to-track-accent2
+            hover:brightness-110 disabled:opacity-50
             text-track-bg text-sm font-semibold px-4 py-2 rounded-xl
-            transition-colors shadow-[0_10px_30px_rgba(56,189,248,0.25)]'
+            transition-[filter,transform] shadow-[0_10px_30px_rgba(34,211,238,0.25)]'
         >
           {loading ? 'Analyzing...' : generated ? '🔄 Refresh' : '🤖 Generate Insights'}
         </button>

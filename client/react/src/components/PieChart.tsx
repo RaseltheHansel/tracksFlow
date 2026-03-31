@@ -13,7 +13,7 @@ interface PieChartProps {
   colors?: string[];
 }
 
-const defaultColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+const defaultColors = ['#22d3ee', '#38bdf8', '#a3e635', '#f59e0b', '#fb7185'];
 
 export default function PieChart({
   title,
@@ -24,7 +24,8 @@ export default function PieChart({
   const total = data.reduce((sum, d) => sum + d.value, 0) || 1;
 
   return (
-    <div className='bg-track-card border border-track-border rounded-2xl p-5'>
+    <div className='bg-gradient-to-br from-track-card/90 to-track-surface/70
+      border border-track-border/80 rounded-2xl p-5 ring-1 ring-white/5'>
       {title && (
         <h3 className='font-semibold text-track-text mb-4'>
           {title}
@@ -47,10 +48,10 @@ export default function PieChart({
             </Pie>
             <Tooltip
               contentStyle={{
-                background: '#111827',
-                border: '1px solid #374151',
+                background: '#0b1120',
+                border: '1px solid #1f2a44',
                 borderRadius: 12,
-                color: '#f9fafb',
+                color: '#e5e7eb',
                 fontSize: 12,
               }}
               formatter={(value, name) => {

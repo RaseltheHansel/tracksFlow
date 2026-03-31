@@ -11,7 +11,7 @@ const deviceIcon = (device: string) => {
 
 const eventTypeColor = (type: string) => {
   if (type === 'pageview') return 'text-track-accent';
-  return 'text-track-yellow';
+  return 'text-track-orange';
 };
 
 export default function LiveFeed({ siteId }: { siteId: string }) {
@@ -36,8 +36,9 @@ export default function LiveFeed({ siteId }: { siteId: string }) {
   }, [siteId]);
 
   return (
-    <div className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
-      shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
+    <div className='bg-gradient-to-br from-track-card/90 to-track-surface/70
+      backdrop-blur border border-track-border/80 rounded-2xl p-5
+      shadow-[0_12px_30px_rgba(0,0,0,0.35)] ring-1 ring-white/5'>
 
       {/* Header */}
       <div className='flex items-center justify-between mb-4'>
@@ -80,7 +81,7 @@ export default function LiveFeed({ siteId }: { siteId: string }) {
             <div
               key={i}
               className='flex items-center gap-3 p-2.5 rounded-xl
-                hover:bg-track-surface transition-colors'
+                hover:bg-track-surface/80 transition-colors'
             >
               {/* Device icon */}
               <span className='text-xl shrink-0'>

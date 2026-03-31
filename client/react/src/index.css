@@ -6,19 +6,22 @@
 }
 
 body {
-  background: radial-gradient(1200px 600px at 10% -10%, #1a2456 0%, rgba(26,36,86,0) 60%),
-              radial-gradient(900px 500px at 90% 0%, #0f3d3e 0%, rgba(15,61,62,0) 55%),
-              #0b0e1a;
-  color: #eef1f7;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,0.25) 0%, rgba(34,211,238,0) 60%),
+    radial-gradient(1000px 600px at 110% 10%, rgba(249,115,22,0.22) 0%, rgba(249,115,22,0) 55%),
+    radial-gradient(900px 500px at 50% 120%, rgba(163,230,53,0.18) 0%, rgba(163,230,53,0) 55%),
+    linear-gradient(180deg, #0a0f1e 0%, #0b1020 60%, #0a0f1e 100%);
+  background-attachment: fixed;
+  color: #e5e7eb;
   font-family: 'Space Grotesk', sans-serif;
   letter-spacing: -0.01em;
 }
 
 ::selection {
-  background: rgba(74, 222, 128, 0.25);
+  background: rgba(34, 211, 238, 0.25);
 }
 
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #0d1222; }
-::-webkit-scrollbar-thumb { background: #25304f; border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: #3a4a74; }
+::-webkit-scrollbar-track { background: #0b1120; }
+::-webkit-scrollbar-thumb { background: #1f2a44; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #2b3a5c; }

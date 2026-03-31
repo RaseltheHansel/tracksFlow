@@ -34,7 +34,7 @@ export default function NavBar({
   };
 
   return (
-    <nav className='bg-track-card border-b border-track-border px-8 py-4'>
+    <nav className='bg-track-card/70 backdrop-blur border-b border-track-border/80 px-8 py-4'>
       <div className='max-w-7xl mx-auto flex items-center justify-between'>
         <div className='flex items-center gap-3'>
           {showBack && (
@@ -64,7 +64,7 @@ export default function NavBar({
           )}
           <button
             onClick={handleLogout}
-            className='bg-track-surface border border-track-border
+            className='bg-track-surface/70 border border-track-border/80
               text-track-soft text-xs font-medium px-3 py-2
               rounded-xl hover:border-track-accent transition-colors'
           >

@@ -19,10 +19,11 @@ export default function BarChart({
   title,
   data,
   height = 220,
-  color = '#3b82f6',
+  color = '#22d3ee',
 }: BarChartProps) {
   return (
-    <div className='bg-track-card border border-track-border rounded-2xl p-5'>
+    <div className='bg-gradient-to-br from-track-card/90 to-track-surface/70
+      border border-track-border/80 rounded-2xl p-5 ring-1 ring-white/5'>
       {title && (
         <h3 className='font-semibold text-track-text mb-4'>
           {title}
@@ -36,15 +37,15 @@ export default function BarChart({
         <div style={{ height }}>
           <ResponsiveContainer width='100%' height='100%'>
             <ReBarChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 0 }}>
-              <CartesianGrid stroke='#374151' strokeDasharray='3 3' />
-              <XAxis dataKey='name' stroke='#9ca3af' fontSize={12} tickMargin={8} />
-              <YAxis stroke='#9ca3af' fontSize={12} tickMargin={8} allowDecimals={false} />
+              <CartesianGrid stroke='#1f2a44' strokeDasharray='3 3' />
+              <XAxis dataKey='name' stroke='#94a3b8' fontSize={12} tickMargin={8} />
+              <YAxis stroke='#94a3b8' fontSize={12} tickMargin={8} allowDecimals={false} />
               <Tooltip
                 contentStyle={{
-                  background: '#111827',
-                  border: '1px solid #374151',
+                  background: '#0b1120',
+                  border: '1px solid #1f2a44',
                   borderRadius: 12,
-                  color: '#f9fafb',
+                  color: '#e5e7eb',
                   fontSize: 12,
                 }}
               />

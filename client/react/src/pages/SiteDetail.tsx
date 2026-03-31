@@ -84,10 +84,10 @@ export default function SiteDetail() {
   };
 
   return (
-    <div className='min-h-screen bg-track-bg'>
+    <div className='min-h-screen bg-track-bg pb-16'>
 
       {/* Navbar */}
-      <nav className='bg-track-card/80 backdrop-blur border-b border-track-border px-8 py-4'>
+      <nav className='bg-track-card/70 backdrop-blur border-b border-track-border/80 px-8 py-4'>
         <div className='max-w-7xl mx-auto flex items-center justify-between'>
           <div className='flex items-center gap-3'>
             <button
@@ -113,7 +113,7 @@ export default function SiteDetail() {
             )}
             <button
               onClick={() => navigate('/settings')}
-              className='bg-track-surface/80 backdrop-blur border border-track-border
+              className='bg-track-surface/70 backdrop-blur border border-track-border/80
                 text-track-soft text-sm font-medium px-4 py-2
                 rounded-xl hover:border-track-accent hover:text-track-text transition-colors'
             >
@@ -121,7 +121,7 @@ export default function SiteDetail() {
             </button>
             <button
               onClick={logout}
-              className='bg-track-surface/80 backdrop-blur border border-track-border
+              className='bg-track-surface/70 backdrop-blur border border-track-border/80
                 text-track-soft text-sm font-medium px-4 py-2
                 rounded-xl hover:border-track-accent hover:text-track-text transition-colors'
             >
@@ -129,9 +129,10 @@ export default function SiteDetail() {
             </button>
             <button
               onClick={handleGetSnippet}
-              className='bg-track-accent/90 hover:bg-track-accent
-                text-track-bg text-sm font-semibold px-4 py-2
-                rounded-xl transition-colors shadow-[0_10px_30px_rgba(56,189,248,0.25)]'
+              className='bg-gradient-to-r from-track-accent to-track-accent2
+                hover:brightness-110 text-track-bg text-sm font-semibold px-4 py-2
+                rounded-xl transition-[filter,transform]
+                shadow-[0_10px_30px_rgba(34,211,238,0.25)]'
             >
               {'</>'}  Get Snippet
             </button>
@@ -158,9 +159,9 @@ export default function SiteDetail() {
                 key={p}
                 onClick={() => setPeriod(p)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium
-                  transition-colors ${period === p
-                    ? 'bg-track-accent/90 text-track-bg shadow-[0_8px_20px_rgba(56,189,248,0.25)]'
-                    : 'bg-track-card/80 border border-track-border text-track-muted hover:text-track-soft'
+                  transition-[filter,transform] ${period === p
+                    ? 'bg-gradient-to-r from-track-accent to-track-accent2 text-track-bg shadow-[0_8px_20px_rgba(34,211,238,0.25)]'
+                    : 'bg-track-surface/70 border border-track-border/80 text-track-muted hover:text-track-soft'
                   }`}
               >
                 {p === '7d' ? '7 days' : p === '30d' ? '30 days' : '90 days'}
@@ -220,8 +221,8 @@ export default function SiteDetail() {
       {showSnippet && (
         <div className='fixed inset-0 bg-black/70 flex items-center
           justify-center z-50 p-4'>
-          <div className='bg-track-card border border-track-border
-            rounded-2xl p-8 w-full max-w-xl'>
+          <div className='bg-gradient-to-br from-track-card/95 to-track-surface/80
+            border border-track-border/80 rounded-2xl p-8 w-full max-w-xl ring-1 ring-white/5'>
             <h2 className='text-xl font-bold text-track-text mb-2'>
               Install TrackFlow
             </h2>
@@ -240,15 +241,15 @@ export default function SiteDetail() {
             <div className='flex gap-3'>
               <button
                 onClick={handleCopy}
-                className='flex-1 bg-track-accent hover:opacity-90
-                  text-white font-semibold py-3 rounded-xl text-sm'
+                className='flex-1 bg-gradient-to-r from-track-accent to-track-accent2
+                  hover:brightness-110 text-track-bg font-semibold py-3 rounded-xl text-sm'
               >
                 {copied ? '✅ Copied!' : 'Copy Snippet'}
               </button>
               <button
                 onClick={() => setShowSnippet(false)}
                 className='flex-1 bg-track-surface border
-                  border-track-border text-track-muted py-3
+                  border-track-border/80 text-track-muted py-3
                   rounded-xl text-sm hover:bg-track-card'
               >
                 Close

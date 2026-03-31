@@ -11,7 +11,7 @@ interface DeviceChartProps {
   browsers: { browser: string; count: number }[];
 }
 
-const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+const colors = ['#22d3ee', '#38bdf8', '#a3e635', '#f59e0b', '#fb7185'];
 
 const prettyLabel = (value: string) =>
   value
@@ -28,8 +28,9 @@ export default function DeviceChart({ devices, browsers }: DeviceChartProps) {
   const maxBrowser = Math.max(...browsers.map((b) => b.count), 1);
 
   return (
-    <div className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
-      shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
+    <div className='bg-gradient-to-br from-track-card/90 to-track-surface/70
+      backdrop-blur border border-track-border/80 rounded-2xl p-5
+      shadow-[0_12px_30px_rgba(0,0,0,0.35)] ring-1 ring-white/5'>
       <h3 className='font-semibold text-track-text mb-4'>Devices & Browsers</h3>
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
@@ -57,10 +58,10 @@ export default function DeviceChart({ devices, browsers }: DeviceChartProps) {
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                      background: '#111827',
-                      border: '1px solid #374151',
+                      background: '#0b1120',
+                      border: '1px solid #1f2a44',
                       borderRadius: 12,
-                      color: '#f9fafb',
+                      color: '#e5e7eb',
                       fontSize: 12,
                     }}
                     formatter={(value, name) => {
@@ -97,7 +98,7 @@ export default function DeviceChart({ devices, browsers }: DeviceChartProps) {
                   </div>
                   <div className='h-1.5 bg-track-surface rounded-full overflow-hidden'>
                     <div
-                      className='h-full bg-track-green rounded-full'
+                      className='h-full bg-gradient-to-r from-track-lime to-track-accent rounded-full'
                       style={{
                         width: `${(b.count / maxBrowser) * 100}%`,
                       }}

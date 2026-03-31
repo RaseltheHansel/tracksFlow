@@ -32,7 +32,7 @@ export default function Login() {
   const inputClass = `w-full bg-track-surface border border-track-border
     text-track-text placeholder:text-track-muted rounded-xl
     px-4 py-3 text-sm outline-none focus:border-track-accent
-    transition-colors`;
+    focus:ring-2 focus:ring-track-accent/20 transition-colors`;
 
   return (
     <div className='min-h-screen bg-track-bg flex items-center justify-center p-6'>
@@ -42,7 +42,9 @@ export default function Login() {
         <div className='text-center mb-8'>
           <p className='text-5xl mb-3'>📊</p>
           <h1 className='text-3xl font-bold text-track-text mb-1'>
-            TrackFlow
+            <span className='bg-gradient-to-r from-track-accent to-track-lime bg-clip-text text-transparent'>
+              TrackFlow
+            </span>
           </h1>
           <p className='text-track-muted text-sm'>
             Privacy-first analytics dashboard
@@ -50,15 +52,16 @@ export default function Login() {
         </div>
 
         {/* Card */}
-        <div className='bg-track-card/80 backdrop-blur border border-track-border
-          rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.45)]'>
+        <div className='bg-gradient-to-br from-track-card/90 to-track-surface/70
+          backdrop-blur border border-track-border/80 rounded-2xl p-8
+          shadow-[0_20px_60px_rgba(0,0,0,0.45)] ring-1 ring-white/5'>
           <h2 className='text-xl font-semibold text-track-text mb-6'>
             Sign in
           </h2>
 
           {error && (
-            <div className='bg-red-500/10 border border-red-500/20
-              text-red-400 text-sm px-4 py-3 rounded-xl mb-4'>
+            <div className='bg-track-red/10 border border-track-red/20
+              text-track-red text-sm px-4 py-3 rounded-xl mb-4'>
               {error}
             </div>
           )}
@@ -85,10 +88,10 @@ export default function Login() {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className='w-full bg-track-accent/90 hover:bg-track-accent
-              disabled:opacity-50 text-track-bg font-semibold
-              py-3 rounded-xl text-sm transition-colors mt-6
-              shadow-[0_10px_30px_rgba(56,189,248,0.25)]'
+            className='w-full bg-gradient-to-r from-track-accent to-track-accent2
+              hover:brightness-110 disabled:opacity-50 text-track-bg font-semibold
+              py-3 rounded-xl text-sm transition-[filter,transform] mt-6
+              shadow-[0_10px_30px_rgba(34,211,238,0.25)]'
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
