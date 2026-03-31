@@ -17,6 +17,8 @@ export interface Site {
 export interface StatsData {
   pageviews:       number;
   uniqueVisitors:  number;
+  bounceRate:      number;
+  avgDuration:     number;
   topPages:        { url: string; views: number }[];
   topReferrers:    { referrer: string; views: number }[];
   deviceBreakdown: { device: string; count: number }[];

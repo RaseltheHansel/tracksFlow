@@ -27,6 +27,7 @@ export const getStats = async (req: AuthRequest, res: Response ): Promise<void> 
             deviceBreakdown,
             browserBreakdown,
             viewsOverTime,
+            sessionEvents,
              
         ] = await Promise.all([
             //Total page views
@@ -87,11 +88,55 @@ export const getStats = async (req: AuthRequest, res: Response ): Promise<void> 
                 raw: true,
             }),
 
+            // Session events for bounce rate + avg duration
+            Event.findAll({
+                where,
+                attributes: ['sessionId', 'type', 'createdAt'],
+                raw: true,
+            }),
+
         ]);
+
+        // Bounce rate + avg duration
+        const sessions = new Map<string, { first: number; last: number; pageviews: number }>();
+        for (const e of sessionEvents as any[]) {
+            if (!e.sessionId) continue;
+            const ts = new Date(e.createdAt).getTime();
+            const existing = sessions.get(e.sessionId);
+            const isPageview = e.type === 'pageview';
+            if (!existing) {
+                sessions.set(e.sessionId, {
+                    first: ts,
+                    last: ts,
+                    pageviews: isPageview ? 1 : 0,
+                });
+            } else {
+                existing.first = Math.min(existing.first, ts);
+                existing.last = Math.max(existing.last, ts);
+                if (isPageview) existing.pageviews += 1;
+            }
+        }
+
+        const totalSessions = sessions.size;
+        let bounceSessions = 0;
+        let totalDurationMs = 0;
+        for (const s of sessions.values()) {
+            if (s.pageviews <= 1) bounceSessions += 1;
+            totalDurationMs += Math.max(0, s.last - s.first);
+        }
+
+        const bounceRate = totalSessions
+            ? Math.round((bounceSessions / totalSessions) * 100)
+            : 0;
+        const avgDuration = totalSessions
+            ? Math.round(totalDurationMs / totalSessions / 1000)
+            : 0;
         
         res.json({  
             pageviews: pageViews,
             uniqueVisitors,
+            bounceRate,
+            avgDuration,
             topPages,
             topReferrers,
             deviceBreakdown,

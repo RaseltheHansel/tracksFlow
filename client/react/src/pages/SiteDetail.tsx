@@ -180,8 +180,8 @@ export default function SiteDetail() {
             <StatsCards
               pageviews={stats.pageviews}
               uniqueVisitors={stats.uniqueVisitors}
-              bounceRate={0}
-              avgDuration={0}
+              bounceRate={stats.bounceRate}
+              avgDuration={stats.avgDuration}
               prevPageviews={0}
               prevVisitors={0}
             />
