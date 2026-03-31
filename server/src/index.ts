@@ -26,8 +26,8 @@ app.set('trust proxy', 1);
 // Website owners load it via script tag in their HTML
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Handle CORS preflight for dashboard routes
-app.options('*', dashboardCors);
+// Handle CORS preflight for dashboard routes (express/router doesn't accept "*")
+app.options(/.*/, dashboardCors);
 
 // Collect routes open in CORS 
 app.use('/api/auth', dashboardCors, authRoutes);
