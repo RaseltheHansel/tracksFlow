@@ -30,12 +30,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.options(/.*/, dashboardCors);
 
 // Collect routes open in CORS 
+app.options('/api/collect', collectCors);
 app.use('/api/auth', dashboardCors, authRoutes);
 app.use('/api/auth', authLimiter);
 app.use('/api/sites', apiLimiter, dashboardCors, siteRoutes);
 app.use('/api/analytics', apiLimiter, dashboardCors, analyticsRoutes);
 app.use('/api/ai', apiLimiter, dashboardCors, aiRoutes);
-app.use('/api/collect', collectLimiter, collectCors, collectRoutes);
+app.use('/api/collect', collectCors, collectLimiter, collectRoutes);
 
 // railway sends SIGTERM when stopping the container
 process.on('SIGTERM', async () => {
