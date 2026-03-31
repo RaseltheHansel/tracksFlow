@@ -5,9 +5,19 @@ import { Server as HttpServer } from 'http';
 let io: SocketServer;   
 
 export const initSocket = (httpServer: HttpServer): SocketServer => {
+    const rawClientUrls = process.env.CLIENT_URL || 'http://localhost:5173';
+    const allowedOrigins = rawClientUrls
+        .split(',')
+        .map((origin) => origin.trim())
+        .filter(Boolean);
+
     io = new SocketServer(httpServer, {
         cors: {
-            origin: process.env.CLIENT_URL || 'http://localhost:5173',
+            origin: (origin, callback) => {
+                if (!origin) return callback(null, true);
+                if (allowedOrigins.includes(origin)) return callback(null, true);
+                return callback(new Error(`CORS blocked for origin: ${origin}`));
+            },
             methods: ['GET', 'POST'],
         },
     });
