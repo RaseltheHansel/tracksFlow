@@ -26,6 +26,9 @@ app.set('trust proxy', 1);
 // Website owners load it via script tag in their HTML
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Handle CORS preflight for dashboard routes
+app.options('*', dashboardCors);
+
 // Collect routes open in CORS 
 app.use('/api/auth', dashboardCors, authRoutes);
 app.use('/api/auth', authLimiter);
@@ -54,4 +57,3 @@ sequelize.sync({ alter: true }).then(() => {
     console.error('❌ Database sync failed:', err);
     process.exit(1);
 });
-
