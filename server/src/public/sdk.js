@@ -32,7 +32,9 @@
     const key = `tf_session_${siteId}`;
     let id = sessionStorage.getItem(key);
     if (!id) {
-      id = Math.random().toString(36).slice(2);
+      id = (crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : (Math.random().toString(36).slice(2) + Date.now().toString(36));
       sessionStorage.setItem(key, id);
     }
     return id;

@@ -12,7 +12,8 @@ export interface LiveEvent {
 
 export const useSocket = (
   siteId: string | null,
-  onNewEvent: (event: LiveEvent) => void
+  onNewEvent: (event: LiveEvent) => void,
+  onStatus?: (connected: boolean) => void
 ) => {
   const socketRef  = useRef<Socket | null>(null);
   // WHY: Store latest onNewEvent in ref to avoid
@@ -44,6 +45,7 @@ export const useSocket = (
       // WHY: Subscribe to this specific site's events
       // Server only sends events for this siteId
       socketRef.current?.emit('subscribe_site', siteId);
+      onStatus?.(true);
     });
 
     // WHY: Use callbackRef.current so we always call
@@ -55,6 +57,7 @@ export const useSocket = (
 
     socketRef.current.on('disconnect', () => {
       console.log('📊 TrackFlow disconnected');
+      onStatus?.(false);
     });
 
     socketRef.current.on('connect_error', (err) => {

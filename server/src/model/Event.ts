@@ -31,7 +31,7 @@ Event.init({
   device:    { type: DataTypes.STRING },
   browser:   { type: DataTypes.STRING },
   os:        { type: DataTypes.STRING },
-  sessionId: { type: DataTypes.UUID },
+  sessionId: { type: DataTypes.STRING },
   visitorId: { type: DataTypes.STRING },
   props:     { type: DataTypes.JSONB },
 }, {

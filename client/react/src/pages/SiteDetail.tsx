@@ -8,12 +8,14 @@ import AIInsights    from '../components/AIInsights';
 import ViewsChart    from '../components/ViewsChart';
 import TopPages      from '../components/TopPages';
 import DeviceChart   from '../components/DeviceChart';
+import { useAuth }   from '../hooks/useAuth';
 
 type Period = '7d' | '30d' | '90d';
 
 export default function SiteDetail() {
   const { siteId }  = useParams<{ siteId: string }>();
   const navigate    = useNavigate();
+  const { user, logout } = useAuth();
   const [site,      setSite]    = useState<Site | null>(null);
   const [stats,     setStats]   = useState<StatsData | null>(null);
   const [period,    setPeriod]  = useState<Period>('7d');
@@ -57,7 +59,18 @@ export default function SiteDetail() {
   const handleGetSnippet = async () => {
     try {
       const { data } = await getSnippet(site!.id);
-      setSnippet(data.snippet);
+      // Normalize snippet for a clean, valid multi-line display
+      const raw = String(data.snippet || '');
+      const srcMatch = raw.match(/src="([^"]+)"/);
+      const siteMatch = raw.match(/data-site="([^"]+)"/);
+      const src = srcMatch?.[1];
+      const siteIdValue = siteMatch?.[1];
+
+      const formatted = (src && siteIdValue)
+        ? `<script\n  src="${src}"\n  data-site="${siteIdValue}"\n  defer\n></script>`
+        : raw.replace(/\s+/g, ' ').trim();
+
+      setSnippet(formatted);
       setShowSnippet(true);
     } catch {
       alert('Failed to get snippet');
@@ -92,14 +105,37 @@ export default function SiteDetail() {
               {site?.domain}
             </span>
           </div>
-          <button
-            onClick={handleGetSnippet}
-            className='bg-track-surface border border-track-border
-              text-track-soft text-sm font-medium px-4 py-2
-              rounded-xl hover:border-track-accent transition-colors'
-          >
-            {'</>'}  Get Snippet
-          </button>
+          <div className='flex items-center gap-3'>
+            {user?.name && (
+              <span className='text-xs text-track-muted'>
+                {user.name}
+              </span>
+            )}
+            <button
+              onClick={() => navigate('/settings')}
+              className='bg-track-surface border border-track-border
+                text-track-soft text-sm font-medium px-4 py-2
+                rounded-xl hover:border-track-accent transition-colors'
+            >
+              Settings
+            </button>
+            <button
+              onClick={logout}
+              className='bg-track-surface border border-track-border
+                text-track-soft text-sm font-medium px-4 py-2
+                rounded-xl hover:border-track-accent transition-colors'
+            >
+              Logout
+            </button>
+            <button
+              onClick={handleGetSnippet}
+              className='bg-track-surface border border-track-border
+                text-track-soft text-sm font-medium px-4 py-2
+                rounded-xl hover:border-track-accent transition-colors'
+            >
+              {'</>'}  Get Snippet
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -196,8 +232,8 @@ export default function SiteDetail() {
             </p>
             <div className='bg-track-surface border border-track-border
               rounded-xl p-4 mb-4 relative'>
-              <pre className='text-track-soft text-sm whitespace-pre-wrap
-                break-all font-mono'>
+              <pre className='text-track-soft text-sm whitespace-pre
+                break-words font-mono leading-relaxed'>
                 {snippet}
               </pre>
             </div>

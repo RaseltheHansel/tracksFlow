@@ -17,7 +17,7 @@ export const initSocket = (httpServer: HttpServer): SocketServer => {
 
         // real-time events only go to the right dashboard
         socket.on('subscribe_site', (siteId: string) => {
-            socket.join(`site: ${siteId}`);
+            socket.join(`site:${siteId}`);
             console.log(`Subscribed to site: ${siteId}`);
         });
 

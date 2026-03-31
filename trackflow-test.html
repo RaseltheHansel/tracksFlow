@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrackFlow Test Page</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        background: #0a0f1e;
+        color: #f9fafb;
+      }
+      .wrap {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 48px 24px;
+      }
+      .card {
+        background: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 16px;
+      }
+      code {
+        background: #111827;
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      a {
+        color: #3b82f6;
+      }
+      button {
+        background: #3b82f6;
+        color: #fff;
+        border: 0;
+        padding: 12px 16px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    </style>
+
+    <!-- TrackFlow SDK: replace YOUR_SITE_ID_HERE with your real siteId -->
+   <script
+  src="http://localhost:5000/sdk.js"
+  data-site="ba277c47-d65e-4a4e-9773-45f9b58abef0"
+  defer
+></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>TrackFlow Test Page</h1>
+        <p>
+          Replace <code>YOUR_SITE_ID_HERE</code> in this file with your real siteId.
+          Then open this file in a browser to generate pageviews.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Quick actions</h2>
+        <p>
+          Click around and refresh to generate more events. You can also use
+          links below to create navigation events.
+        </p>
+        <button onclick="alert('Button click event');">Test Button</button>
+      </div>
+
+      <div class="card">
+        <h2>Links</h2>
+        <ul>
+          <li><a href="https://example.com" target="_blank">Example.com</a></li>
+          <li><a href="#section-a">Jump to Section A</a></li>
+          <li><a href="#section-b">Jump to Section B</a></li>
+        </ul>
+      </div>
+
+      <div class="card" id="section-a">
+        <h2>Section A</h2>
+        <p>Some placeholder content to scroll.</p>
+      </div>
+
+      <div class="card" id="section-b">
+        <h2>Section B</h2>
+        <p>More placeholder content to scroll.</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -49,6 +49,8 @@ export const getSnippet = (id: number)                                => api.get
 // ── Analytics ─────────────────────────────────────
 export const getStats    = (siteId: string, period = '7d') =>
   api.get(`/analytics/${siteId}?period=${period}`);
+export const getLiveEvents = (siteId: string) =>
+  api.get(`/analytics/${siteId}/events`);
 
 // ── AI ────────────────────────────────────────────
 export const getInsights = (siteId: string) =>

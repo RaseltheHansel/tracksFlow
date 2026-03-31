@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSocket, type LiveEvent } from '../hooks/useSocket';
+import { getLiveEvents } from '../api/axios';
 import { formatDistanceToNow } from 'date-fns';
 
 const deviceIcon = (device: string) => {
@@ -18,10 +19,21 @@ export default function LiveFeed({ siteId }: { siteId: string }) {
   const [connected, setConnected] = useState(false);
 
   useSocket(siteId, (event) => {
-    setConnected(true);
     // WHY: Keep only last 20 events — prevent memory leak
     setEvents(prev => [event, ...prev].slice(0, 20));
-  });
+  }, setConnected);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const { data } = await getLiveEvents(siteId);
+        setEvents(data);
+      } catch {
+        // ignore initial load errors
+      }
+    };
+    if (siteId) load();
+  }, [siteId]);
 
   return (
     <div className='bg-track-card border border-track-border rounded-2xl p-5'>

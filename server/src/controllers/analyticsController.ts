@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import   { Op, fn, col, literal } from 'sequelize';
 import Event from "../model/Event";
+import Site from "../model/Site";
 import { AuthRequest } from "../middleware/auth";
 
 export const getStats = async (req: AuthRequest, res: Response ): Promise<void> => {
@@ -62,9 +63,8 @@ export const getStats = async (req: AuthRequest, res: Response ): Promise<void> 
             Event.findAll({
                 where,
                 attributes: ["device", [fn("COUNT", col("id")), "count"]],
-                group: ['browser'],
+                group: ['device'],
                 raw: true,
-
             }),
 
             // Browser Breakdown
@@ -90,18 +90,55 @@ export const getStats = async (req: AuthRequest, res: Response ): Promise<void> 
         ]);
         
         res.json({  
-            pageViews,
+            pageviews: pageViews,
             uniqueVisitors,
             topPages,
             topReferrers,
             deviceBreakdown,
             browserBreakdown,
             viewsOverTime,
-
         });
 
     }catch(error: unknown) {
         if(error instanceof Error) {
+            res.status(500).json({message: error.message});
+        }
+    }
+};
+
+// Get - last N events for live feed
+export const getLiveEvents = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+        const { siteId } = req.params;
+
+        const site = await Site.findOne({
+            where: { siteId, userId: req.userId },
+        });
+
+        if (!site) {
+            res.status(404).json({message: 'Site not found'});
+            return;
+        }
+
+        const events = await Event.findAll({
+            where: { siteId },
+            order: [['createdAt', 'DESC']],
+            limit: 20,
+            raw: true,
+        });
+
+        const formatted = events.map((e: any) => ({
+            type: e.type,
+            url: e.url,
+            browser: e.browser,
+            os: e.os,
+            device: e.device,
+            timestamp: e.createdAt,
+        }));
+
+        res.json(formatted);
+    } catch (error: unknown) {
+        if (error instanceof Error) {
             res.status(500).json({message: error.message});
         }
     }

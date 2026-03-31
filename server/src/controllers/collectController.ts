@@ -9,6 +9,11 @@ export const collect = async (req: Request, res: Response): Promise<void> =>{
     try{
         const { siteId, type, url, referrer, userAgent, visitorId, sessionId, props, width } = req.body;
 
+        if (!siteId || !url) {
+            res.status(400).json({message: 'siteId and url are required'});
+            return;
+        }
+
         // verify siteId exists and is valid
         const site = await Site.findOne({where: {siteId }});
         if(!site) {
@@ -16,7 +21,7 @@ export const collect = async (req: Request, res: Response): Promise<void> =>{
             return;
         }
         // parse user agent to get device/browser/OS
-        const parser = new UAParser(userAgent);
+        const parser = new UAParser(userAgent || '');
         const browser = parser.getBrowser().name || "Unknown";
         const os = parser.getOS().name || "Unknown";
         const device = width < 768 ? "mobile"
@@ -42,10 +47,11 @@ export const collect = async (req: Request, res: Response): Promise<void> =>{
       // Socket.io might not be ready — still save the event
     }
 
-
+        res.status(204).end();
 
     }catch(error: unknown){
         if(error instanceof Error) {
+            console.error('Collect error:', error.message);
             res.status(500).json({message: error.message});
         }
     }

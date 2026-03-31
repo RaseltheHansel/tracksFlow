@@ -21,15 +21,15 @@ initSocket(httpServer);
 
 app.use(express.json());
 
-//Website owners load it via script tag in their HTML 
-app.use('/sdk.js', express.static(path.join(__dirname, 'public, sdk.js')));
+// Website owners load it via script tag in their HTML
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Collect routes open in CORS 
 app.use('/api/auth', dashboardCors, authRoutes);
 app.use('/api/sites', dashboardCors, siteRoutes);
 app.use('/api/analytics', dashboardCors, analyticsRoutes);
 app.use('/api/ai', dashboardCors, aiRoutes);
-app.use('/api/cllect', collectCors, collectRoutes); 
+app.use('/api/collect', collectCors, collectRoutes);
 
 // railway sends SIGTERM when stopping the container
 process.on('SIGTERM', async () => {
@@ -51,6 +51,5 @@ sequelize.sync({ alter: true }).then(() => {
     console.error('❌ Database sync failed:', err);
     process.exit(1);
 });
-
 
 

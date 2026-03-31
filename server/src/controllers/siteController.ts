@@ -94,7 +94,7 @@ export const updateSite = async (req: AuthRequest, res: Response): Promise<void>
         const site = await Site.findOne({
             where: {
                 id: req.params.id,
-                user: req.userId
+                userId: req.userId
             },
         });
 
@@ -103,10 +103,28 @@ export const updateSite = async (req: AuthRequest, res: Response): Promise<void>
             return;
         }
 
-        const { name, timezone } = req.body;
+        const { name, domain, timezone } = req.body;
+
+        let cleanDomain: string | undefined;
+        if (domain) {
+            cleanDomain = domain
+                .replace(/^https?:\/\//, '')
+                .replace(/\/$/, '')
+                .toLowerCase();
+
+            const exists = await Site.findOne({
+                where: { domain: cleanDomain, userId: req.userId },
+            });
+
+            if (exists && exists.id !== site.id) {
+                res.status(400).json({message: 'Domain already added'});
+                return;
+            }
+        }
 
         await site.update({
             name: name || site.name,
+            domain: cleanDomain || site.domain,
             timezone: timezone || site.timezone,
         });
 
@@ -125,12 +143,13 @@ export const deleteSite = async (req: AuthRequest, res: Response): Promise<void>
         const site = await Site.findOne({
             where: {
                 id: req.params.id,
-                user: req.userId,
+                userId: req.userId,
             },
         });
 
         if(!site) {
             res.status(404).json({message: 'Site not found'});
+            return;
         }
         
         // delete all events first before deleting site
@@ -153,7 +172,7 @@ export const getSnippet = async (req: AuthRequest, res: Response): Promise<void>
         const site = await Site.findOne({
             where: {
                 id: req.params.id,
-                user: req.userId,
+                userId: req.userId,
             },
         });
 
@@ -165,11 +184,7 @@ export const getSnippet = async (req: AuthRequest, res: Response): Promise<void>
         // generate the script tag developers copy-paste
         const serverUrl = process.env.SERVER_URL || 'http://localhost:5000';
 
-        const snippet = `<script
-            src="${serverUrl}/sdk.js"
-            data-site="${site.siteId}"
-            defer
-            ></script>`;
+        const snippet = `<script src="${serverUrl}/sdk.js" data-site="${site.siteId}" defer></script>`;
         res.json({ snippet, siteId: site.siteId });
 
     }catch (error: unknown) {
