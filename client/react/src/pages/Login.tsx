@@ -50,8 +50,8 @@ export default function Login() {
         </div>
 
         {/* Card */}
-        <div className='bg-track-card border border-track-border
-          rounded-2xl p-8'>
+        <div className='bg-track-card/80 backdrop-blur border border-track-border
+          rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.45)]'>
           <h2 className='text-xl font-semibold text-track-text mb-6'>
             Sign in
           </h2>
@@ -85,9 +85,10 @@ export default function Login() {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className='w-full bg-track-accent hover:opacity-90
-              disabled:opacity-50 text-white font-semibold
-              py-3 rounded-xl text-sm transition-opacity mt-6'
+            className='w-full bg-track-accent/90 hover:bg-track-accent
+              disabled:opacity-50 text-track-bg font-semibold
+              py-3 rounded-xl text-sm transition-colors mt-6
+              shadow-[0_10px_30px_rgba(56,189,248,0.25)]'
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>

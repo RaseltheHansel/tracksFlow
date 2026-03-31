@@ -25,8 +25,8 @@ export const getInsights = async (req: AuthRequest, res: Response): Promise<void
 
             Event.findAll({
                 where: { siteId, createdAt: { [Op.gte]: since}}, 
-                attributes: ['deviceType', [fn('COUNT', col('deviceType')), 'count']],
-                group: ['deviceType'], raw: true,   
+                attributes: ['device', [fn('COUNT', col('device')), 'count']],
+                group: ['device'], raw: true,
 
             }),
         ]);

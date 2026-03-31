@@ -87,7 +87,7 @@ export default function SiteDetail() {
     <div className='min-h-screen bg-track-bg'>
 
       {/* Navbar */}
-      <nav className='bg-track-card border-b border-track-border px-8 py-4'>
+      <nav className='bg-track-card/80 backdrop-blur border-b border-track-border px-8 py-4'>
         <div className='max-w-7xl mx-auto flex items-center justify-between'>
           <div className='flex items-center gap-3'>
             <button
@@ -113,25 +113,25 @@ export default function SiteDetail() {
             )}
             <button
               onClick={() => navigate('/settings')}
-              className='bg-track-surface border border-track-border
+              className='bg-track-surface/80 backdrop-blur border border-track-border
                 text-track-soft text-sm font-medium px-4 py-2
-                rounded-xl hover:border-track-accent transition-colors'
+                rounded-xl hover:border-track-accent hover:text-track-text transition-colors'
             >
               Settings
             </button>
             <button
               onClick={logout}
-              className='bg-track-surface border border-track-border
+              className='bg-track-surface/80 backdrop-blur border border-track-border
                 text-track-soft text-sm font-medium px-4 py-2
-                rounded-xl hover:border-track-accent transition-colors'
+                rounded-xl hover:border-track-accent hover:text-track-text transition-colors'
             >
               Logout
             </button>
             <button
               onClick={handleGetSnippet}
-              className='bg-track-surface border border-track-border
-                text-track-soft text-sm font-medium px-4 py-2
-                rounded-xl hover:border-track-accent transition-colors'
+              className='bg-track-accent/90 hover:bg-track-accent
+                text-track-bg text-sm font-semibold px-4 py-2
+                rounded-xl transition-colors shadow-[0_10px_30px_rgba(56,189,248,0.25)]'
             >
               {'</>'}  Get Snippet
             </button>
@@ -144,8 +144,8 @@ export default function SiteDetail() {
         {/* Header + Period selector */}
         <div className='flex items-center justify-between mb-6'>
           <div>
-            <p className='text-xs tracking-widest uppercase
-              text-track-accent font-medium mb-1'>
+            <p className='text-xs tracking-[0.25em] uppercase
+              text-track-muted font-medium mb-2'>
               Analytics
             </p>
             <h1 className='text-2xl font-bold text-track-text'>
@@ -159,8 +159,8 @@ export default function SiteDetail() {
                 onClick={() => setPeriod(p)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium
                   transition-colors ${period === p
-                    ? 'bg-track-accent text-white'
-                    : 'bg-track-card border border-track-border text-track-muted hover:text-track-soft'
+                    ? 'bg-track-accent/90 text-track-bg shadow-[0_8px_20px_rgba(56,189,248,0.25)]'
+                    : 'bg-track-card/80 border border-track-border text-track-muted hover:text-track-soft'
                   }`}
               >
                 {p === '7d' ? '7 days' : p === '30d' ? '30 days' : '90 days'}

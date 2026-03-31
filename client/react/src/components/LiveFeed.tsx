@@ -36,7 +36,8 @@ export default function LiveFeed({ siteId }: { siteId: string }) {
   }, [siteId]);
 
   return (
-    <div className='bg-track-card border border-track-border rounded-2xl p-5'>
+    <div className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
+      shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
 
       {/* Header */}
       <div className='flex items-center justify-between mb-4'>

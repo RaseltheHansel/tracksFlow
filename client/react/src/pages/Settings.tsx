@@ -11,7 +11,8 @@ export default function Settings() {
       <NavBar title='Settings' subtitle='Account preferences' showBack backTo='/' />
 
       <div className='max-w-3xl mx-auto p-8'>
-        <div className='bg-track-card border border-track-border rounded-2xl p-6'>
+        <div className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-6
+          shadow-[0_20px_60px_rgba(0,0,0,0.45)]'>
           <h2 className='text-xl font-semibold text-track-text mb-4'>
             Account
           </h2>

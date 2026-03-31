@@ -54,13 +54,13 @@ export default function StatsCards({
     <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
       {stats.map(s => (
         <div key={s.label}
-          className='bg-track-card border border-track-border
-            rounded-2xl p-5'>
+          className='bg-track-card/80 backdrop-blur border border-track-border
+            rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
           <div className='flex items-center justify-between mb-3'>
             <span className='text-2xl'>{s.icon}</span>
             {s.trend}
           </div>
-          <p className='text-3xl font-bold text-track-text mb-1'>
+          <p className='text-3xl font-semibold text-track-text mb-1'>
             {s.value}
           </p>
           <p className='text-track-muted text-sm'>{s.label}</p>

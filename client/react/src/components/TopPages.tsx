@@ -6,7 +6,8 @@ export default function TopPages({ pages }: TopPagesProps) {
   const max = Math.max(...pages.map(p => p.views), 1);
 
   return (
-    <div className='bg-track-card border border-track-border rounded-2xl p-5'>
+    <div className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
+      shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
       <h3 className='font-semibold text-track-text mb-4'>Top Pages</h3>
 
       {pages.length === 0 ? (

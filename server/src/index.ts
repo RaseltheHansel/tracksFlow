@@ -5,6 +5,7 @@ import path from "path";
 import { sequelize } from "./config/db";
 import { initSocket } from "./config/socket";
 import { dashboardCors, collectCors } from "./middleware/cors"; 
+import { apiLimiter, authLimiter, collectLimiter } from "./middleware/rateLimit";
 import authRoutes from "./routes/authRoutes";
 import siteRoutes from "./routes/siteRoutes";
 import analyticsRoutes from "./routes/analyticsRoutes"; 
@@ -20,16 +21,18 @@ const httpServer = createServer(app);
 initSocket(httpServer);
 
 app.use(express.json());
+app.set('trust proxy', 1);
 
 // Website owners load it via script tag in their HTML
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Collect routes open in CORS 
 app.use('/api/auth', dashboardCors, authRoutes);
-app.use('/api/sites', dashboardCors, siteRoutes);
-app.use('/api/analytics', dashboardCors, analyticsRoutes);
-app.use('/api/ai', dashboardCors, aiRoutes);
-app.use('/api/collect', collectCors, collectRoutes);
+app.use('/api/auth', authLimiter);
+app.use('/api/sites', apiLimiter, dashboardCors, siteRoutes);
+app.use('/api/analytics', apiLimiter, dashboardCors, analyticsRoutes);
+app.use('/api/ai', apiLimiter, dashboardCors, aiRoutes);
+app.use('/api/collect', collectLimiter, collectCors, collectRoutes);
 
 // railway sends SIGTERM when stopping the container
 process.on('SIGTERM', async () => {
@@ -51,5 +54,4 @@ sequelize.sync({ alter: true }).then(() => {
     console.error('❌ Database sync failed:', err);
     process.exit(1);
 });
-
 

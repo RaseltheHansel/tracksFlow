@@ -1,12 +1,24 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
-body {
-  background-color: #0a0f1e;
-  color: #f9fafb;
-  font-family: 'Inter', sans-serif;
+:root {
+  color-scheme: dark;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #111827; }
-::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+body {
+  background: radial-gradient(1200px 600px at 10% -10%, #1a2456 0%, rgba(26,36,86,0) 60%),
+              radial-gradient(900px 500px at 90% 0%, #0f3d3e 0%, rgba(15,61,62,0) 55%),
+              #0b0e1a;
+  color: #eef1f7;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: rgba(74, 222, 128, 0.25);
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0d1222; }
+::-webkit-scrollbar-thumb { background: #25304f; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #3a4a74; }

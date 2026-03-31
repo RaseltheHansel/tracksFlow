@@ -80,10 +80,18 @@ export default function Dashboard() {
       <div className='max-w-6xl mx-auto'>
         <div className='flex items-center justify-between mb-8'>
           <div>
-            <p className='text-xs tracking-widest uppercase text-track-accent font-medium mb-1'>
+            <p className='text-xs tracking-[0.25em] uppercase text-track-muted font-medium mb-2'>
               Dashboard
             </p>
-            <h1 className='text-4xl font-bold text-track-text'>📊 TrackFlow</h1>
+            <h1 className='text-4xl font-semibold text-track-text'>
+              TrackFlow
+              <span className='ml-3 text-xs font-medium text-track-accent bg-track-surface border border-track-border px-2 py-1 rounded-full align-middle'>
+                Real‑time
+              </span>
+            </h1>
+            <p className='text-track-muted text-sm mt-2'>
+              Privacy-first analytics for modern products
+            </p>
           </div>
           <div className='flex items-center gap-3'>
             {user?.name && (
@@ -93,23 +101,24 @@ export default function Dashboard() {
             )}
             <button
               onClick={() => navigate('/settings')}
-              className='bg-track-surface border border-track-border
+              className='bg-track-surface/80 backdrop-blur border border-track-border
                 text-track-soft text-sm font-medium px-4 py-2.5 rounded-xl
-                hover:border-track-accent transition-colors'
+                hover:border-track-accent hover:text-track-text transition-colors'
             >
               Settings
             </button>
             <button
               onClick={logout}
-              className='bg-track-surface border border-track-border
+              className='bg-track-surface/80 backdrop-blur border border-track-border
                 text-track-soft text-sm font-medium px-4 py-2.5 rounded-xl
-                hover:border-track-accent transition-colors'
+                hover:border-track-accent hover:text-track-text transition-colors'
             >
               Logout
             </button>
             <button onClick={() => setShowCreate(true)}
-              className='bg-track-accent hover:opacity-90 text-white
-                font-semibold px-5 py-2.5 rounded-xl text-sm transition-opacity'>
+              className='bg-track-accent/90 hover:bg-track-accent text-track-bg
+                font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors
+                shadow-[0_10px_30px_rgba(56,189,248,0.25)]'>
               + Add Website
             </button>
           </div>
@@ -126,7 +135,7 @@ export default function Dashboard() {
               Add your first website to start tracking visitors
             </p>
             <button onClick={() => setShowCreate(true)}
-              className='bg-track-accent text-white px-6 py-3 rounded-xl font-semibold'>
+              className='bg-track-accent text-track-bg px-6 py-3 rounded-xl font-semibold'>
               Add Website
             </button>
           </div>
@@ -135,8 +144,9 @@ export default function Dashboard() {
             {sites.map(site => (
               <div key={site.id}
                 onClick={() => navigate(`/site/${site.siteId}`)}
-                className='bg-track-card border border-track-border rounded-2xl p-5
-                  cursor-pointer hover:border-track-accent transition-colors'>
+                className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
+                  cursor-pointer hover:border-track-accent transition-colors
+                  shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
                 <h3 className='font-semibold text-track-text mb-1'>{site.name}</h3>
                 <p className='text-track-muted text-sm mb-4'>{site.domain}</p>
                 <code className='text-xs text-track-muted bg-track-surface

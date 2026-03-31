@@ -28,7 +28,8 @@ export default function DeviceChart({ devices, browsers }: DeviceChartProps) {
   const maxBrowser = Math.max(...browsers.map((b) => b.count), 1);
 
   return (
-    <div className='bg-track-card border border-track-border rounded-2xl p-5'>
+    <div className='bg-track-card/80 backdrop-blur border border-track-border rounded-2xl p-5
+      shadow-[0_8px_30px_rgba(0,0,0,0.25)]'>
       <h3 className='font-semibold text-track-text mb-4'>Devices & Browsers</h3>
 
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
