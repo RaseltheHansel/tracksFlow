@@ -84,15 +84,14 @@ export default function Dashboard() {
               Dashboard
             </p>
             <h1 className='text-4xl font-semibold text-track-text'>
-              <span className='bg-gradient-to-r from-track-accent to-track-lime bg-clip-text text-transparent'>
-                TrackFlow
-              </span>
+              TrackFlow
               <span className='ml-3 text-xs font-semibold text-track-accent
                 bg-track-accent/10 border border-track-accent/30 px-2.5 py-1
                 rounded-full align-middle'>
                 Real‑time
               </span>
             </h1>
+            <div className='mt-3 h-1 w-16 rounded-full bg-gradient-to-r from-track-accent to-track-lime' />
             <p className='text-track-muted text-sm mt-2'>
               Privacy-first analytics for modern products
             </p>

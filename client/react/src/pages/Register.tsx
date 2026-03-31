@@ -46,10 +46,9 @@ export default function Register() {
         <div className='text-center mb-8'>
           <p className='text-5xl mb-3'>📊</p>
           <h1 className='text-3xl font-bold text-track-text mb-1'>
-            <span className='bg-gradient-to-r from-track-accent to-track-lime bg-clip-text text-transparent'>
-              TrackFlow
-            </span>
+            TrackFlow
           </h1>
+          <div className='mx-auto h-1 w-12 rounded-full bg-gradient-to-r from-track-accent to-track-lime' />
           <p className='text-track-muted text-sm'>
             Start tracking your visitors for free
           </p>
